@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row mb-5">
+    <div class="col">
+      <div class="h-100 p-5 text-white bg-dark rounded-3 text-center">
+        <h1>Clallam County Jail Roster Scraper</h1>
+        <h5>
+          Sign up free for daily emails about new bookings into Clallam County
+          Correctional Facility.
+        </h5>
+        <p>
+          This is a newly-laucned service. If you have any questions or would
+          like to sugest improvements, please contact us at
+          <%= mail_to 'support@anysoft.us' %>.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+      <h2 style="margin-bottom:30px;">Signup</h2>
+      <%= render 'form', user: @user %>
+    </div>
+    <div class="col-sm-4"></div>
+  </div>
+</div>

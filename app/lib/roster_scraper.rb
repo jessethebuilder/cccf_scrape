@@ -100,6 +100,8 @@ class RosterScraper
       next unless row.find('.Charges').text == number
       return row.find('.Court').text
     end
+
+    return nil
   end
 
   def scrape_charges(booking)
@@ -111,7 +113,7 @@ class RosterScraper
   def scrape_bond(element, charge)
     bond_number = element.find('.ChargeBond').text
 
-    return if bond_number.blank?
+    return nil if bond_number.blank?
 
     @ghost.find_all('.BookingBonds tbody tr').each do |row|
       next unless row.find('.BondNumber').text == bond_number
@@ -125,6 +127,8 @@ class RosterScraper
 
       return bond
     end
+
+    return nil
   end
 
   def index_page_has_no_records?
