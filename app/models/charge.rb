@@ -1,4 +1,4 @@
 class Charge < ApplicationRecord
   belongs_to :booking
-  belongs_to :bond, dependent: :destroty
+  belongs_to :bond, dependent: :destroy
 end
