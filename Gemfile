@@ -16,8 +16,6 @@ gem 'capybara', '>= 3.26'
 gem 'selenium-webdriver'
 gem 'webdrivers'
 
-gem 'figaro'
-
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
