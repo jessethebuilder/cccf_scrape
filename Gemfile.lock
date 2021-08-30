@@ -62,6 +62,10 @@ GEM
       zeitwerk (~> 2.3)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
+    airbrake (11.0.3)
+      airbrake-ruby (~> 5.1)
+    airbrake-ruby (5.2.0)
+      rbtree3 (~> 0.5)
     bindex (0.8.1)
     bootsnap (1.7.7)
       msgpack (~> 1.0)
@@ -146,6 +150,7 @@ GEM
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    rbtree3 (0.6.0)
     regexp_parser (2.1.1)
     rubyzip (2.3.2)
     sass-rails (6.0.0)
@@ -202,6 +207,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  airbrake
   bootsnap (>= 1.4.4)
   byebug
   capybara (>= 3.26)

@@ -5,6 +5,7 @@ class CreateInmates < ActiveRecord::Migration[6.1]
       t.string :number
       t.string :age
       t.string :gender
+      t.string :url
 
       t.timestamps
     end

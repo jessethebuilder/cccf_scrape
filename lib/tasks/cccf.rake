@@ -5,7 +5,8 @@ namespace :cccf do
 
   task send_new_bookings: :environment do
     User.wants_new_bookings.pluck(:id).each do |user_id|
-      DailyMailer.new_bookings(user_id)
+      puts "Puts sending to User: #{user_id}" if Rails.env.development?
+      DailyMailer.new_bookings(user_id).deliver_now
     end
   end
 end

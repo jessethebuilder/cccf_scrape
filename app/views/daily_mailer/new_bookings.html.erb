@@ -1,1 +1,23 @@
-hai
+<div class="body">
+  <h1>New Bookings for <%= Date.today %></h1>
+    <ul class="bookings">
+      <% @bookings.each do |booking| %>
+        <li>
+          <strong><%= booking.date.to_s %></strong>:
+          <%= booking.inmate.name %>
+          <ul class="charges">
+            <% booking.charges.each do |charge| %>
+              <li><%= charge.description %></li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+  </ul>
+</div>
+
+<div class="footer">
+  This email has been sent to you at your request from
+  <%= link_to 'https://cccf-roster@herokuapp.com', 'https://cccf-roster@herokuapp.com' %>.
+  To be removed from this mailing list, visit <%= edit_user_url(@user) %>,
+  and update your settings.
+</div>

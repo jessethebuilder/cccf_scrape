@@ -25,6 +25,7 @@ class RosterScraper
       name: @ghost.find('.Name span').text,
       age: @ghost.find('.Age span').text,
       gender: @ghost.find('.Gender span').text,
+      url: href
     )
 
     # scrape_bond(inmate)
@@ -57,9 +58,9 @@ class RosterScraper
 
     booking.update(
       number: number,
-      date: element.find('.BookingDate span').text,
-      release_date: element.find('.ReleaseDate span').text,
-      scheduled_release_date: element.find('.ScheduledReleaseDate span').text,
+      date: parse_date_string(element.find('.BookingDate span').text),
+      release_date: parse_date_string(element.find('.ReleaseDate span').text),
+      scheduled_release_date: parse_date_string(element.find('.ScheduledReleaseDate span').text),
       facility: element.find('.HousingFacility span').text,
       origin: element.find('.BookingOrigin span').text,
       total_bond_amount: element.find('.TotalBondAmount span').text.gsub('$', '').gsub(',', ''),
@@ -75,7 +76,11 @@ class RosterScraper
 
   def scrape_charge(element, booking)
     docket_number = element.find('.DocketNumber').text
-    charge = Charge.find_or_initialize_by(docket_number: docket_number)
+    if docket_number =~ /FRESH ARREST/i
+      charge = Charge.new(docket_number: docket_number)
+    else
+      charge = Charge.find_or_initialize_by(docket_number: docket_number)
+    end
 
     bond = scrape_bond(element, charge)
     court = scrape_court(element, charge)
@@ -85,7 +90,7 @@ class RosterScraper
       bond: bond,
       court: court,
       description: element.find('.ChargeDescription').text,
-      offense_date: element.find('.OffenseDate').text,
+      offense_date: parse_date_string(element.find('.OffenseDate').text),
       disposition: element.find('.Disposition').text,
       disposition_date: element.find('.DispositionDate').text,
       arrested_by: element.find('.ArrestingAgencies').text,
@@ -97,6 +102,7 @@ class RosterScraper
     number = element.find('.SeqNumber').text
 
     @ghost.find_all('.BookingCourtInfo tbody tr').each do |row|
+      break if row.text == 'No data'
       next unless row.find('.Charges').text == number
       return row.find('.Court').text
     end
@@ -138,5 +144,13 @@ class RosterScraper
 
   def index_page(number)
     "#{INDEX_URL}#{number}"
+  end
+
+  def parse_date_string(date)
+    return nil if date.blank?
+
+    /(\d+)\/(\d+)\/(\d+) (.+)\z/ =~ date
+    formatted_date = "#{$3}-#{$1}-#{$2} #{$4}"
+    Time.parse(formatted_date).in_time_zone('Pacific Time (US & Canada)')
   end
 end
