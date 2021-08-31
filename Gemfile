@@ -16,8 +16,6 @@ gem 'capybara', '>= 3.26'
 gem 'selenium-webdriver'
 gem 'webdrivers'
 
-gem 'poltergeist'
-
 gem 'airbrake'
 
 group :development, :test do
