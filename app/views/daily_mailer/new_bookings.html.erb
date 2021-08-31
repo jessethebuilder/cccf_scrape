@@ -3,8 +3,8 @@
     <ul class="bookings">
       <% @bookings.each do |booking| %>
         <li>
-          <strong><%= booking.date.to_s %></strong>:
-          <%= booking.inmate.name %>
+          <%= booking.date.to_s %>:
+          <%= link_to booking.inmate.name, booking.inmate.url %><br>
           <ul class="charges">
             <% booking.charges.each do |charge| %>
               <li><%= charge.description %></li>

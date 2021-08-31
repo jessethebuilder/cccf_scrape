@@ -67,7 +67,7 @@ class RosterScraper
       total_bail_amount: element.find('.TotalBailAmount span').text.gsub('$', '').gsub(',', '')
     )
 
-    scrape_charges(booking)
+    scrape_charges(element, booking)
   end
 
   def scrape_bookings(inmate)
@@ -76,11 +76,7 @@ class RosterScraper
 
   def scrape_charge(element, booking)
     docket_number = element.find('.DocketNumber').text
-    if docket_number =~ /FRESH ARREST/i
-      charge = Charge.new(docket_number: docket_number)
-    else
-      charge = Charge.find_or_initialize_by(docket_number: docket_number)
-    end
+    charge = Charge.new(docket_number: docket_number)
 
     bond = scrape_bond(element, charge)
     court = scrape_court(element, charge)
@@ -110,9 +106,9 @@ class RosterScraper
     return nil
   end
 
-  def scrape_charges(booking)
-    @ghost.find_all('.BookingCharges tbody tr') do |element|
-      scrape_charge(element, booking)
+  def scrape_charges(element, booking)
+    element.find_all('.BookingCharges tbody tr').each do |charge_element|
+      scrape_charge(charge_element, booking)
     end
   end
 

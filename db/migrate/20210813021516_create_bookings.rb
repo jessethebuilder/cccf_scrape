@@ -9,7 +9,7 @@ class CreateBookings < ActiveRecord::Migration[6.1]
       t.float :total_bond_amount
       t.float :total_bail_amount
       t.string :number
-      t.references :inmate, null: false, foreign_key: true
+      t.references :inmate, null: false
 
       t.timestamps
     end

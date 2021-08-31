@@ -9,8 +9,8 @@ class CreateCharges < ActiveRecord::Migration[6.1]
       t.string :arrested_by
       t.string :commit
       t.string :court
-      t.references :booking, null: false, foreign_key: true
-      t.references :bond, foreign_key: true
+      t.references :booking, null: false
+      t.references :bond
 
       t.timestamps
     end
